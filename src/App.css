@@ -108,11 +108,11 @@ img {
   color: #333;
 }
 
-.countriesCard {
+.scaleCard {
   transition: transform 0.5s ease;
 }
 
-.countriesCard:hover {
+.scaleCard:hover {
   transform: scale(1.05);
 }
 

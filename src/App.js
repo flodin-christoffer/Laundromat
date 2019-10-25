@@ -8,24 +8,11 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    calender: {
-      week: ["Monday", "Tuesday", "Wensday", "Thursday", "Friday"],
-      weekNumber: 1,
-      timeZones: [
-        "06:00-09:00 ",
-        "09:00-12:00 ",
-        "12:00-15:00 ",
-        "15:00-18:00 "
-      ]
-    },
+    days: ["Monday", "Tuesday", "Wensday", "Thursday", "Friday"],
     weekEnd: ["Saturday", "Sunday"],
     week: 1,
-    laundryTime: {
-      id: 0,
-      week: 1,
-      timeZone: "",
-      isBooked: false,
-      user: "",
+    user: {
+      userName: "",
       email: ""
     },
     alert: ""
@@ -41,15 +28,11 @@ class App extends Component {
       this.setState({ alert: "Please enter name and email" });
       setTimeout(() => this.setState({ alert: "" }), 5000);
     } else {
-      console.log("din användare heter " + name + email);
       setTimeout(
         () =>
           this.setState({
-            laundryTime: {
-              isBooked: false,
-              week: 1,
-              timeZone: "",
-              user: name,
+            user: {
+              userName: name,
               email: email
             }
           }),
@@ -58,37 +41,31 @@ class App extends Component {
     }
   };
 
-  // booking the time
-  bookTime = async e => {
-    e.preventDefault();
-    const time = e.target.elements.value;
-    const id = e.target.id;
-    console.log(time, id);
-    if (!this.state.laundryTime.isBooked) {
-      console.log("tiden är ledig");
-      console.log(this.state.laundryTime);
-      this.setState({
-        laundryTime: {
-          isBooked: true,
-          week: this.state.laundryTime.user.week,
-          timeZone: this.state.laundryTime.timeZone,
-          user: this.state.laundryTime.user,
-          email: this.state.laundryTime.email
-        }
-      });
-    } else {
-      console.log("tiden är bokad");
-      console.log(this.state.laundryTime);
-    }
-  };
-
-  // making sure only one checkbox is checked
-  selectOnlyThis = async e => {
-    const id = e.target.id;
-    const day = e.target.name;
-    console.log(id);
-    document.getElementById(id).checked = true;
-  };
+  // // booking the time
+  // bookTime = async e => {
+  //   e.preventDefault();
+  //   const time = e.target.elements.value;
+  //   const id = e.target.id;
+  //   console.log(time, id);
+  //   if (!this.state.laundryTime.isBooked) {
+  //     console.log("tiden är ledig");
+  //     console.log(this.state.laundryTime);
+  //     this.setState({
+  //       laundryTime: {
+  //         isBooked: true,
+  //         week: this.state.laundryTime.user.week,
+  //         timeZone: this.state.laundryTime.timeZone,
+  //         user: this.state.laundryTime.user,
+  //         email: this.state.laundryTime.email,
+  //         day: this.state.laundryTime.day,
+  //         id: 11
+  //       }
+  //     });
+  //   } else {
+  //     console.log("tiden är bokad");
+  //     console.log(this.state.laundryTime);
+  //   }
+  // };
 
   render() {
     return (
@@ -103,15 +80,15 @@ class App extends Component {
           ) : (
             <span></span>
           )}
-          {this.state.laundryTime.user.length < 1 ? (
+          {this.state.user.userName.length < 1 ? (
             <User setUser={this.setUser} />
           ) : null}
 
-          {this.state.laundryTime.user.length > 1 ? (
+          {this.state.user.userName.length > 1 ? (
             <div>
               <h1 className="text-center mb-15">
                 {" "}
-                Welcome {this.state.laundryTime.user}
+                Welcome {this.state.user.userName}
               </h1>
               <h1 className="text-center mb-10">
                 <i
@@ -138,11 +115,10 @@ class App extends Component {
               </h1>
 
               <Calender
-                calender={this.state.calender}
+                days={this.state.days}
                 week={this.state.week}
-                laundryTime={this.state.laundryTime}
-                bookTime={this.bookTime}
-                selectOnlyThis={this.selectOnlyThis}
+                user={this.state.user}
+                // bookTime={this.bookTime}
               />
 
               <Weekend weekEnd={this.state.weekEnd} />

@@ -7,7 +7,7 @@ const Weekend = props => (
       return (
         <div
           key={day}
-          className="card text-center border-radius countriesCard bg-dark"
+          className="card text-center border-radius scaleCard bg-dark"
         >
           <h2 className="mb-15"> {day} </h2>
           <h4 className="text-center mb-10">
