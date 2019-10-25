@@ -18,7 +18,7 @@ class App extends Component {
     alert: ""
   };
 
-  // Set the user upon first entering the page
+  // Sets the user upon first entering the page, username, email
   setUser = async e => {
     e.preventDefault();
     const name = e.target.elements.userName.value;
@@ -53,6 +53,7 @@ class App extends Component {
             </div>
           ) : null}
 
+          {/* hides pages if no user is logged in  */}
           {this.state.user.userName.length < 1 ? (
             <User setUser={this.setUser} />
           ) : null}
@@ -89,11 +90,13 @@ class App extends Component {
                   }
                 ></i>
               </h1>
+              {/* Displays the days and times for booking */}
               <Calender
                 days={this.state.days}
                 week={this.state.week}
                 user={this.state.user}
               />
+              {/* Displays the weekend days */}
               <Weekend weekEnd={this.state.weekEnd} />
             </div>
           ) : null}

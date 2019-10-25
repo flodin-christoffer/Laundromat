@@ -5,26 +5,26 @@ class Calender extends Component {
   state = {
     alert: "",
     alertType: "",
-    reservations: []
-  };
-  // runs on mount
-  componentDidMount = async () => {
-    // marking checkbox that has reservations
-    let ids = [
+    reservations: [],
+    checkBox: [
       "Weeknumber:1Day:MondayTimezone:1",
       "Weeknumber:1Day:TuesdayTimezone:2",
       "Weeknumber:1Day:WensdayTimezone:3",
       "Weeknumber:1Day:ThursdayTimezone:4"
-    ];
-    ids.forEach(function(item) {
+    ]
+  };
+  // runs on mount
+  componentDidMount = async () => {
+    // marking checkbox that has reservations ,idea is to present examples of how booked times would look like
+    this.state.checkBox.forEach(function(item) {
       document.getElementById(item).checked = true;
       document.getElementById(item).disabled = true;
     });
   };
 
-  // ask if you are sure, and makes a reservation
+  // makes a reservation
   makeReservation = e => {
-    //rg ex to get week,day,timezone
+    //reg exp to get week,day,timezone, adding those and user to object laundrytime.
     let result = e.target.id.match(/Weeknumber:(.*)Day:(.*)Timezone:(.*)/);
     const laundryTime = {
       week: result[1],
@@ -35,6 +35,7 @@ class Calender extends Component {
       id: e.target.id
     };
 
+    // marks checkbox true and , runs addReservation
     if (document.getElementById(e.target.id).checked === true) {
       this.addReservation(laundryTime);
     } else {
@@ -42,11 +43,16 @@ class Calender extends Component {
     }
   };
 
-  //adds reservation to reservations[] and adds success alert
+  //adds reservation to reservations[] in state and displays a success alert
   addReservation = async laundryTime => {
     document.getElementById(laundryTime.id).checked = true;
     this.setState({
-      alert: laundryTime.userName + " has made a reservation ",
+      alert:
+        laundryTime.userName +
+        " has made a reservation on " +
+        laundryTime.day +
+        " week " +
+        laundryTime.week,
       alertType: "alert alert-success border-radius"
     });
     setTimeout(() => this.setState({ alert: "" }), 3000);
@@ -72,12 +78,21 @@ class Calender extends Component {
     this.setState({ reservations: newStateArray });
   }
 
-  logArray() {
-    const sweeterArray = this.state.reservations.map(sweetItem => {
-      return sweetItem;
-    });
-    console.log(sweeterArray);
-  }
+  // failed atempt to uncheck all execpt booke times
+  // checkAll(formname, checktoggle) {
+  //   let checkboxes = new Array();
+  //   checkboxes = document.getElementsByTagName("input");
+
+  //   for (var i = 0; i < checkboxes.length; i++) {
+  //     if (
+  //       checkboxes[i].type === "checkbox" &&
+  //       this.state.checkBox.includes([i])
+  //     ) {
+  //       console.log(checkboxes);
+  //       checkboxes[i].checked = checktoggle;
+  //     }
+  //   }
+  // }
 
   render() {
     return (

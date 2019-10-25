@@ -20,7 +20,7 @@ const User = props => (
 
     <input
       type="submit"
-      value="Set User"
+      value="Login"
       className="btn btn-block border-radius"
     />
   </form>
