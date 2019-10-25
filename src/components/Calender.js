@@ -24,27 +24,23 @@ class Calender extends Component {
     } else {
       if (window.confirm("Are you sure you wish to reserve this laundry time?"))
         console.log(e.target.id);
+
+      //reg ex to get week,day,timezone
+      let result = e.target.id.match(/Weeknumber:(.*)Day:(.*)Timezone:(.*)/);
       const laundryTime = {
-        week: 1,
-        day: "Monday",
-        timeZone: 1,
-        userName: "chris",
-        email: "chris@de.se"
+        week: result[1],
+        day: result[2],
+        timeZone: result[3],
+        userName: this.props.user.userName,
+        email: this.props.user.email,
+        id: e.target.id
       };
       this.paintReservation(laundryTime);
     }
   };
 
   paintReservation(laundryTime) {
-    let id =
-      "Weeknumber:" +
-      laundryTime.week +
-      "Day:" +
-      laundryTime.day +
-      "Timezone:" +
-      laundryTime.timeZone;
-    console.log(id);
-    document.getElementById(id).checked = true;
+    document.getElementById(laundryTime.id).checked = true;
     this.setState({
       alert: laundryTime.userName + " has made a reservation "
     });
