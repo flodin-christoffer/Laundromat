@@ -41,32 +41,6 @@ class App extends Component {
     }
   };
 
-  // // booking the time
-  // bookTime = async e => {
-  //   e.preventDefault();
-  //   const time = e.target.elements.value;
-  //   const id = e.target.id;
-  //   console.log(time, id);
-  //   if (!this.state.laundryTime.isBooked) {
-  //     console.log("tiden är ledig");
-  //     console.log(this.state.laundryTime);
-  //     this.setState({
-  //       laundryTime: {
-  //         isBooked: true,
-  //         week: this.state.laundryTime.user.week,
-  //         timeZone: this.state.laundryTime.timeZone,
-  //         user: this.state.laundryTime.user,
-  //         email: this.state.laundryTime.email,
-  //         day: this.state.laundryTime.day,
-  //         id: 11
-  //       }
-  //     });
-  //   } else {
-  //     console.log("tiden är bokad");
-  //     console.log(this.state.laundryTime);
-  //   }
-  // };
-
   render() {
     return (
       <div className="App">
@@ -77,9 +51,8 @@ class App extends Component {
             <div className="alert alert-light border-radius">
               <i className="fas fa-info-circle"></i> {this.state.alert}
             </div>
-          ) : (
-            <span></span>
-          )}
+          ) : null}
+
           {this.state.user.userName.length < 1 ? (
             <User setUser={this.setUser} />
           ) : null}
@@ -90,6 +63,9 @@ class App extends Component {
                 {" "}
                 Welcome {this.state.user.userName}
               </h1>
+              <h4 className="text-center mb-10">
+                Select a week and day then click to make a reservation
+              </h4>
               <h1 className="text-center mb-10">
                 <i
                   className="fas fa-arrow-left mr-15"
@@ -113,14 +89,11 @@ class App extends Component {
                   }
                 ></i>
               </h1>
-
               <Calender
                 days={this.state.days}
                 week={this.state.week}
                 user={this.state.user}
-                // bookTime={this.bookTime}
               />
-
               <Weekend weekEnd={this.state.weekEnd} />
             </div>
           ) : null}
