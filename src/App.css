@@ -184,6 +184,11 @@ img {
   color: #fff;
 }
 
+.alert-success {
+  background: var(--flowbox-green);
+  color: #fff;
+}
+
 .btn:hover {
   opacity: 0.8;
 }
