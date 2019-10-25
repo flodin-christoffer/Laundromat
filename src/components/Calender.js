@@ -8,9 +8,16 @@ class Calender extends Component {
   // runs on mount
   componentDidMount = async () => {
     // marking checkbox that has reservations
-    let id = "Weeknumber:" + 1 + "Day:Monday" + "Timezone:" + 1;
-    console.log(id);
-    document.getElementById(id).checked = true;
+    let ids = [
+      "Weeknumber:1Day:MondayTimezone:1",
+      "Weeknumber:1Day:TuesdayTimezone:2",
+      "Weeknumber:1Day:WensdayTimezone:3",
+      "Weeknumber:1Day:ThursdayTimezone:4"
+    ];
+    ids.forEach(function(item) {
+      document.getElementById(item).checked = true;
+      document.getElementById(item).disabled = true;
+    });
   };
 
   makeReservation = e => {

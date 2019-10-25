@@ -5,10 +5,7 @@ const Weekend = props => (
   <div className="grid-2">
     {props.weekEnd.map(day => {
       return (
-        <div
-          key={day}
-          className="card text-center border-radius scaleCard bg-dark"
-        >
+        <div key={day} className="card text-center border-radius bg-dark">
           <h2 className="mb-15"> {day} </h2>
           <h4 className="text-center mb-10">
             Sorry no booking available today.
