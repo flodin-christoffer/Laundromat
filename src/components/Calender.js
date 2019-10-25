@@ -3,7 +3,8 @@ import React, { Component } from "react";
 // const Calender = props => (
 class Calender extends Component {
   state = {
-    alert: ""
+    alert: "",
+    alertType: ""
   };
   // runs on mount
   componentDidMount = async () => {
@@ -20,38 +21,37 @@ class Calender extends Component {
     });
   };
 
+  // ask if you are sure, and makes a reservation
   makeReservation = e => {
-    if (document.getElementById(e.target.id).checked === false) {
-      if (
-        window.confirm(
-          "Are you sure you want to let go of this great laundry time?"
-        )
-      )
-        console.log(e.target.id);
-    } else {
-      if (window.confirm("Are you sure you wish to reserve this laundry time?"))
-        console.log(e.target.id);
+    //rg ex to get week,day,timezone
+    let result = e.target.id.match(/Weeknumber:(.*)Day:(.*)Timezone:(.*)/);
+    const laundryTime = {
+      week: result[1],
+      day: result[2],
+      timeZone: result[3],
+      userName: this.props.user.userName,
+      email: this.props.user.email,
+      id: e.target.id
+    };
 
-      //reg ex to get week,day,timezone
-      let result = e.target.id.match(/Weeknumber:(.*)Day:(.*)Timezone:(.*)/);
-      const laundryTime = {
-        week: result[1],
-        day: result[2],
-        timeZone: result[3],
-        userName: this.props.user.userName,
-        email: this.props.user.email,
-        id: e.target.id
-      };
+    if (document.getElementById(e.target.id).checked === true) {
       this.paintReservation(laundryTime);
+    } else {
+      this.setState({
+        alert: laundryTime.userName + " has taken away his reservation ",
+        alertType: "alert alert-removed border-radius"
+      });
+      setTimeout(() => this.setState({ alert: "" }), 3000);
     }
   };
 
   paintReservation(laundryTime) {
     document.getElementById(laundryTime.id).checked = true;
     this.setState({
-      alert: laundryTime.userName + " has made a reservation "
+      alert: laundryTime.userName + " has made a reservation ",
+      alertType: "alert alert-success border-radius"
     });
-    setTimeout(() => this.setState({ alert: "" }), 8000);
+    setTimeout(() => this.setState({ alert: "" }), 3000);
   }
 
   render() {
@@ -60,7 +60,7 @@ class Calender extends Component {
       <div>
         {/* shows alert if no text is entered */}
         {this.state.alert ? (
-          <div className="alert alert-success border-radius">
+          <div className={this.state.alertType}>
             <i className="fas fa-info-circle"></i> {this.state.alert}
           </div>
         ) : null}
