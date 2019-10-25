@@ -4,7 +4,8 @@ import React, { Component } from "react";
 class Calender extends Component {
   state = {
     alert: "",
-    alertType: ""
+    alertType: "",
+    reservations: []
   };
   // runs on mount
   componentDidMount = async () => {
@@ -35,23 +36,47 @@ class Calender extends Component {
     };
 
     if (document.getElementById(e.target.id).checked === true) {
-      this.paintReservation(laundryTime);
+      this.addReservation(laundryTime);
     } else {
-      this.setState({
-        alert: laundryTime.userName + " has taken away his reservation ",
-        alertType: "alert alert-removed border-radius"
-      });
-      setTimeout(() => this.setState({ alert: "" }), 3000);
+      this.removeReservation(laundryTime);
     }
   };
 
-  paintReservation(laundryTime) {
+  //adds reservation to reservations[] and adds success alert
+  addReservation = async laundryTime => {
     document.getElementById(laundryTime.id).checked = true;
     this.setState({
       alert: laundryTime.userName + " has made a reservation ",
       alertType: "alert alert-success border-radius"
     });
     setTimeout(() => this.setState({ alert: "" }), 3000);
+
+    //add to state array
+    var newStateArray = this.state.reservations.slice();
+    newStateArray.push(laundryTime);
+    this.setState({ reservations: newStateArray });
+  };
+
+  // removes reservation
+  removeReservation(laundryTime) {
+    this.setState({
+      alert: laundryTime.userName + " has taken away his reservation ",
+      alertType: "alert alert-removed border-radius"
+    });
+    setTimeout(() => this.setState({ alert: "" }), 3000);
+
+    //remove from state array
+    var newStateArray = this.state.reservations.slice();
+    newStateArray.push(laundryTime);
+    newStateArray = newStateArray.filter(entry => entry.id !== laundryTime.id);
+    this.setState({ reservations: newStateArray });
+  }
+
+  logArray() {
+    const sweeterArray = this.state.reservations.map(sweetItem => {
+      return sweetItem;
+    });
+    console.log(sweeterArray);
   }
 
   render() {
