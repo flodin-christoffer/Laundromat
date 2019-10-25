@@ -83,11 +83,15 @@ class App extends Component {
                 Week {this.state.week}{" "}
                 <i
                   className="fas fa-arrow-right ml-5"
-                  onClick={() =>
-                    this.setState({
-                      week: this.state.week + 1
-                    })
-                  }
+                  onClick={() => {
+                    this.state.week >= 52
+                      ? this.setState({
+                          week: this.state.week
+                        })
+                      : this.setState({
+                          week: this.state.week + 1
+                        });
+                  }}
                 ></i>
               </h1>
               {/* Displays the days and times for booking */}

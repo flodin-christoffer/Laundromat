@@ -5,9 +5,18 @@ class Calender extends Component {
   state = {
     alert: "",
     alertType: "",
-    reservations: [],
+    reservations: [
+      {
+        day: "Monday",
+        timeZone: 1,
+        userName: "chris",
+        email: "chris@flo.se",
+        id: "Weeknumber:1Day:MondayTimezone:1",
+        checked: true
+      }
+    ],
     checkBox: [
-      "Weeknumber:1Day:MondayTimezone:1",
+      // "Weeknumber:1Day:MondayTimezone:1",
       "Weeknumber:1Day:TuesdayTimezone:2",
       "Weeknumber:1Day:WensdayTimezone:3",
       "Weeknumber:1Day:ThursdayTimezone:4"
@@ -32,7 +41,8 @@ class Calender extends Component {
       timeZone: result[3],
       userName: this.props.user.userName,
       email: this.props.user.email,
-      id: e.target.id
+      id: e.target.id,
+      checked: true
     };
 
     // marks checkbox true and , runs addReservation
@@ -78,7 +88,7 @@ class Calender extends Component {
     this.setState({ reservations: newStateArray });
   }
 
-  // failed atempt to uncheck all execpt booke times
+  // failed atempt to uncheck all execpt booked times
   // checkAll(formname, checktoggle) {
   //   let checkboxes = new Array();
   //   checkboxes = document.getElementsByTagName("input");
@@ -119,6 +129,7 @@ class Calender extends Component {
                     className="checkBox"
                     type="checkbox"
                     value="06:00-09:00"
+                    checked={this.state.reservations.checked}
                     id={
                       "Weeknumber:" +
                       this.props.week +
@@ -134,6 +145,7 @@ class Calender extends Component {
                     className="checkBox"
                     type="checkbox"
                     value="09:00-12:00"
+                    checked={this.state.reservations.checked}
                     id={
                       "Weeknumber:" +
                       this.props.week +
