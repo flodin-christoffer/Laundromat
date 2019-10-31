@@ -7,29 +7,48 @@ class Calender extends Component {
     alertType: "",
     reservations: [
       {
-        day: "Monday",
-        timeZone: 1,
         userName: "chris",
         email: "chris@flo.se",
-        id: "Weeknumber:1Day:MondayTimezone:1",
-        checked: true
+        id: "Weeknumber:1Day:MondayTimezone:1"
       }
-    ],
-    checkBox: [
-      // "Weeknumber:1Day:MondayTimezone:1",
-      "Weeknumber:1Day:TuesdayTimezone:2",
-      "Weeknumber:1Day:WensdayTimezone:3",
-      "Weeknumber:1Day:ThursdayTimezone:4"
     ]
   };
-  // runs on mount
+
+  //runs on mount
   componentDidMount = async () => {
     // marking checkbox that has reservations ,idea is to present examples of how booked times would look like
-    this.state.checkBox.forEach(function(item) {
-      document.getElementById(item).checked = true;
-      document.getElementById(item).disabled = true;
+    this.state.reservations.forEach(function(item) {
+      document.getElementById(item.id).checked = true;
+      document.getElementById(item.id).disabled = true;
     });
   };
+
+  // runs when week is changed
+  componentDidUpdate(nextProps) {
+    if (this.props.week !== nextProps.week) {
+      let checkboxes = [];
+      // finds all checkboxes
+      checkboxes = document.getElementsByTagName("input");
+
+      // clears all
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type === "checkbox") {
+          checkboxes[i].checked = false;
+          checkboxes[i].disabled = false;
+        }
+      }
+      // marks reservations
+      this.state.reservations.forEach(function(item) {
+        let box = document.getElementById(item.id);
+        if (typeof box != "undefined" && box != null) {
+          box.checked = true;
+        }
+      });
+
+      return true;
+    }
+    return false;
+  }
 
   // makes a reservation
   makeReservation = e => {
@@ -41,8 +60,7 @@ class Calender extends Component {
       timeZone: result[3],
       userName: this.props.user.userName,
       email: this.props.user.email,
-      id: e.target.id,
-      checked: true
+      id: e.target.id
     };
 
     // marks checkbox true and , runs addReservation
@@ -87,22 +105,6 @@ class Calender extends Component {
     newStateArray = newStateArray.filter(entry => entry.id !== laundryTime.id);
     this.setState({ reservations: newStateArray });
   }
-
-  // failed atempt to uncheck all execpt booked times
-  // checkAll(formname, checktoggle) {
-  //   let checkboxes = new Array();
-  //   checkboxes = document.getElementsByTagName("input");
-
-  //   for (var i = 0; i < checkboxes.length; i++) {
-  //     if (
-  //       checkboxes[i].type === "checkbox" &&
-  //       this.state.checkBox.includes([i])
-  //     ) {
-  //       console.log(checkboxes);
-  //       checkboxes[i].checked = checktoggle;
-  //     }
-  //   }
-  // }
 
   render() {
     return (
